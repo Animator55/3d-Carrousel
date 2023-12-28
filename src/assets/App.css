@@ -1,0 +1,16 @@
+main {
+  /* display: flex; */
+}
+
+div {
+  font-size: smaller;
+}
+
+div:has(+.selected), .selected + div {
+  font-size:medium;
+}
+
+.selected {
+  background-color: red;
+  font-size: large;
+}
