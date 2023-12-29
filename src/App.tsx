@@ -1,29 +1,72 @@
 import React from 'react' 
 import './assets/App.css'
+import image1 from './assets/estatua.png'
+import image2 from './assets/medieval city ideas 2.png'
+import image3 from './assets/medieval-city ideas 3.jpg'
+import image4 from './assets/medieval-city ideas.jpg'
 
 const defaultImageGallery = [
-  "Image-1",
-  "Image-2",
-  "Image-3",
-  "Image-4",
-  "Image-5",
+  image1,
+  image2,
+  image3,
+  image4,
+  image1,
+  image2,
+  image3,
+  image4,
+  image1,
+  image2,
+  image3,
+  image4,
+  image1,
+  image2,
+  image3,
+  image4,
 ]
 
 export default function App() {
-  const [gallery, setGallery] = React.useState(defaultImageGallery)
-  const [currentImage, setCurrentImage] = React.useState(0)
+  const gallery = defaultImageGallery
 
-  return <main>
+  const changeByKey = (e: KeyboardEvent)=>{
+    let change = e.key === "ArrowRight" ? 1 : -1
+    let galleryList = document.querySelector(".gallery")
+
+    if(!galleryList) return
+
+    let selected = 0
+    let list = galleryList.children
+    for(let i=0;i< list.length; i++){
+      if(list[i].classList.contains("selected")) {
+        selected = i
+        break
+      }
+    }
+    
+    list[selected].classList.remove("selected")
+    let newValue = selected + change
+    
+    if(newValue === -1) newValue = gallery.length-1
+    else if(newValue === gallery.length) newValue = 0
+
+    list[newValue].classList.add("selected")
+  }
+
+  React.useEffect(()=>{
+    document.addEventListener('keydown', changeByKey)
+  })
+
+  return <main className='gallery'>
     {gallery.map((image, i)=>{
-      return <div 
+      return <img 
         key={Math.random()} 
-        className={currentImage === i ? "selected": ""}
-        onClick={()=>{
-          if(i === currentImage-1 || i === currentImage+1) setCurrentImage(i)
+        src={image}
+        className={i === 0 ? "image selected": "image"}
+        onClick={(e)=>{
+          let selected = document.querySelector(".selected")
+          selected?.classList.remove("selected")
+          e.currentTarget.classList.add("selected")
         }}
-      >
-        {image}
-      </div>
+        />
     })}
   </main>
 }
