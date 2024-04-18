@@ -57,3 +57,18 @@ main {
   z-index: 2;
   display: block;
 }
+
+.image:not(.selected) > .desc {
+  opacity: 0;
+}
+
+.blurry {
+  opacity: 0.7!important;
+  filter: blur(2px)!important;
+}
+
+.showy {
+  opacity: 1!important;
+  filter: none!important;
+  z-index: 2!important;
+}
